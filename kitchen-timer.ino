@@ -8,7 +8,6 @@
 #define DIO 3
 
 const int BTN_START_PIN = 8;
-//const int BTN_STOP_PIN = 8;
 
 const int ENC_PIN_1 = 4;
 const int ENC_PIN_2 = 5;
@@ -26,7 +25,6 @@ bool clockTimeSet = false;
 bool finished;
 
 int buttonStartState = 0;
-//int buttonStopState = 0;
 
 int timerHours = 0;
 int timerMinutes =  0;
@@ -46,23 +44,11 @@ void setup() {
 
   last = -1;
 
-  //pinMode(ENC_PUSH_BUTTON, INPUT_PULLUP);
   pinMode(BTN_START_PIN, INPUT);
-  //pinMode(BTN_STOP_PIN, INPUT);
 }
 
 void loop() {
   if (!started) {
-    /*
-    display.setBrightness(0x0f);
-
-    data[0] = display.encodeDigit(timerHours / 10);
-    data[1] = display.encodeDigit(timerHours % 10);
-    data[2] = display.encodeDigit(timerMinutes / 10);
-    data[3] = display.encodeDigit(timerMinutes % 10);
-  
-    display.setSegments(data);
-    */
 
     value += encoder->getValue();
  
@@ -98,23 +84,12 @@ void loop() {
     }
 
       buttonStartState = digitalRead(BTN_START_PIN);
-//    buttonStopState = digitalRead(BTN_STOP_PIN);
 
     if (buttonStartState == LOW) {
-      //timerMinutes--;
-      //calculateHours(false);
-      //delay(300);
       Serial.println("Start button pressed");
       started = true;
     }
-  /*    
-    if (buttonStopState == HIGH) {
-      //timerMinutes++;
-      //calculateHours(true);
-      //delay(300);
-      Serial.println("Stop button pressed");
-    }
-  */  
+ 
   } else {
     finished = isTimerFinished();
     
@@ -126,17 +101,7 @@ void loop() {
   }
 
     display.setBrightness(0x0f);
-
-   
     display.showNumberDecEx(timeToInteger(), (0x80 >> 1), (timerMinutes / 10) == 0);
-/*
-    data[0] = display.encodeDigit(timerHours / 10);
-    data[1] = display.encodeDigit(timerHours % 10);
-    data[2] = display.encodeDigit(timerMinutes / 10);
-    data[3] = display.encodeDigit(timerMinutes % 10);
-  
-    display.setSegments(data);
-  */
 }
 
 int timeToInteger() {
