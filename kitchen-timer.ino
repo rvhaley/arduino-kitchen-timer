@@ -9,6 +9,8 @@
 
 const int BTN_START_PIN = 8;
 
+const int PIEZO_PIN = 12;
+
 const int ENC_PIN_1 = 4;
 const int ENC_PIN_2 = 5;
 const int ENC_PIN_3 = 6;
@@ -45,6 +47,7 @@ void setup() {
   last = -1;
 
   pinMode(BTN_START_PIN, INPUT);
+  pinMode(PIEZO_PIN, OUTPUT);
 }
 
 void loop() {
@@ -97,7 +100,11 @@ void loop() {
       Alarm.delay(1000);
       decreaseTime();
       calculateHours(false);
-    }  
+    } else {
+      Serial.println("Timer finished");
+      tone(PIEZO_PIN, 1000, 500);
+      delay(500);
+    } 
   }
 
     display.setBrightness(0x0f);
